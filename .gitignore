@@ -1,0 +1,17 @@
+.tern-project
+.eslintrc.json
+.idea/
+.vscode/
+
+*.txt
+*.bak
+*.pdf
+*.log
+*.sh
+*.service
+
+images/
+images-new/
+node_modules/
+package-lock.json
+!requirements.txt
