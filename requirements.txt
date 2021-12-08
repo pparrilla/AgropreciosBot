@@ -1,3 +1,4 @@
 pyTelegramBotAPI
 unidecode
 lxml
+pandas
