@@ -5,7 +5,7 @@ import signal
 import sys
 import threading
 import time
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 
 import telebot
 
@@ -16,6 +16,7 @@ import datetime
 data_timer = None
 sub_timer = None
 subscriptions = []
+subscriptions_path = os.environ.get('SUBS_PATH')
 
 
 bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'), threaded=False)
@@ -90,14 +91,14 @@ def send_table(chat, date):
 
 def load_subscriptions():
     global subscriptions
-    if os.path.exists('subscriptions.txt'):
-        file = open('subscriptions.txt', 'r')
+    if os.path.exists(subscriptions_path):
+        file = open(subscriptions_path, 'r')
         for sub in file.readlines():
             subscriptions.append(int(sub.replace('\n', '')))
 
 
 def persist_subscriptions():
-    file = open('subscriptions.txt', 'w')
+    file = open(subscriptions_path, 'w')
     for sub in subscriptions:
         file.write(str(sub) + '\n')
     file.close()
@@ -105,7 +106,7 @@ def persist_subscriptions():
 
 def process_subscriptions():
     today = datetime.datetime.today()
-    date = today.strftime("%d/%m/%y")
+    date = today.strftime("%d/%m/%Y")
 
     for sub in subscriptions:
         send_table(sub, date)
