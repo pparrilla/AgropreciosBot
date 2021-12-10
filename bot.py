@@ -17,6 +17,47 @@ data_timer = None
 sub_timer = None
 subscriptions = []
 subscriptions_path = os.environ.get('SUBS_PATH')
+products_dict = [
+    {
+        'id': 1,
+        'name': 'Tomate Daniela Verde',
+        'command': 'tomatedanielaverde'
+    },
+    {
+        'id': 2,
+        'name': 'Tomate Daniela',
+        'command': 'tomatedaniela'
+    },
+    {
+        'id': 3,
+        'name': 'Tomate Pedra',
+        'command': 'tomatepera'
+    },
+    {
+        'id': 4,
+        'name': 'Tomate Ramo',
+        'command': 'tomateramo'
+    },
+    {
+        'id': 5,
+        'name': 'Pepino Frances',
+        'command': 'pepinofrances'
+    },
+    {
+        'id': 6,
+        'name': 'Pepino Espanol',
+        'command': 'pepinoespanol'
+    },
+    {
+        'id': 7,
+        'name': 'Pepino Almeria',
+        'command': 'pepinoalmeria'
+    }
+]
+
+commands_product_list = []
+for product in products_dict:
+    commands_product_list.append(product['command'])
 
 
 bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'), threaded=False)
@@ -70,6 +111,14 @@ def unsubscribe(message):
     bot.send_message(message.chat.id, msg)
 
 
+@bot.message_handler(commands=commands_product_list)
+def select_products(message):
+    pass
+
+@bot.message_handler(commands=['producto'])
+def show_products(message):
+    pass
+
 def read_html(date):
     dfs = pd.read_html('https://www.agroprecios.com/precios-producto-tabla.php?prod=7&fec=' + date)
 
@@ -121,11 +170,11 @@ def schedule_subscription_processing():
     now = datetime.datetime.now()
     next = now
 
-    if now.hour < 15:
-        next = now.replace(hour=15, minute=0)
-    elif now.hour >= 15:
+    if now.hour < 14:
+        next = now.replace(hour=14, minute=0)
+    elif now.hour >= 14:
         next = now + timedelta(days=1)
-        next = next.replace(hour=15, minute=0)
+        next = next.replace(hour=14, minute=0)
 
     # if next.weekday() == 7:
     #     # Dining hall closed on sundays, so schedule to next monday
