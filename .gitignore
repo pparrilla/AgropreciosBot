@@ -9,9 +9,11 @@
 *.log
 *.sh
 *.service
+*.json
 
 images/
 images-new/
 node_modules/
 package-lock.json
 !requirements.txt
+venv/
