@@ -138,7 +138,16 @@ def welcome_message(message):
 
     subscriptions_dict[str(message.chat.id)] = [7]
     save_subscriptions_dict()
-    log.info(subscriptions_dict)
+
+    bot.send_message(message.chat.id, msg)
+
+@bot.message_handler(commands=['ayuda'])
+def help_message(message):
+    msg = "Este bot publica el precio del Pepino Almería en las diferentes subastas a las 15:00. Escribe /hoy o /ayer para obtener la tabla de precios"
+    msg = msg + "\n\n"
+    msg = msg + "Para suscribirse a otro producto, escribe /productos y selecciona el producto que quieres suscribirse"
+    msg = msg + "\n\n"
+    msg = msg + "Para desuscribirse de un producto, escribe /desuscribir y selecciona el producto que quieres desuscribirse"
 
     bot.send_message(message.chat.id, msg)
 
