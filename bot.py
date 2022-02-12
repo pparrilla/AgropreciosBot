@@ -126,15 +126,17 @@ for command in commands_product_list:
     commands_del_list.append(command + '_del')
 
 
-bot = telebot.TeleBot(os.environ.get('BOT_TOKEN'), threaded=False)
+bot = telebot.TeleBot(os.environ.get('BOT_TOKEN_2'), threaded=False)
 
 @bot.message_handler(commands=['start'])
 def welcome_message(message):
     msg = "Este bot publica el precio del Pepino Almería en las diferentes subastas a las 15:00. Escribe /hoy o /ayer para obtener la tabla de precios"
     msg = msg + "\n\n"
-    msg = msg + "Para suscribirse a otro producto, escribe /productos y selecciona el producto que quieres suscribirse"
+    msg = msg + "Para ver el precio de los productos, escribe /productos y selecciona el producto que quieres suscribirse"
     msg = msg + "\n\n"
-    msg = msg + "Para desuscribirse de un producto, escribe /desuscribir y selecciona el producto que quieres desuscribirse"
+    msg = msg + "Para suscribirse a otro producto, escribe /suscripcion y selecciona el producto que quieres suscribirse"
+    msg = msg + "\n\n"
+    msg = msg + "Para desuscribirse de un producto, escribe /eliminar y selecciona el producto que quieres desuscribirse"
 
     subscriptions_dict[str(message.chat.id)] = [7]
     save_subscriptions_dict()
@@ -145,9 +147,11 @@ def welcome_message(message):
 def help_message(message):
     msg = "Este bot publica el precio del Pepino Almería en las diferentes subastas a las 15:00. Escribe /hoy o /ayer para obtener la tabla de precios"
     msg = msg + "\n\n"
-    msg = msg + "Para suscribirse a otro producto, escribe /productos y selecciona el producto que quieres suscribirse"
+    msg = msg + "Para ver el precio de los productos, escribe /productos y selecciona el producto que quieres suscribirse"
     msg = msg + "\n\n"
-    msg = msg + "Para desuscribirse de un producto, escribe /desuscribir y selecciona el producto que quieres desuscribirse"
+    msg = msg + "Para suscribirse a otro producto, escribe /suscripcion y selecciona el producto que quieres suscribirse"
+    msg = msg + "\n\n"
+    msg = msg + "Para desuscribirse de un producto, escribe /eliminar y selecciona el producto que quieres desuscribirse"
 
     bot.send_message(message.chat.id, msg)
 
@@ -165,7 +169,7 @@ def send_menu(message):
 
     send_table(str(message.chat.id), date)
 
-@bot.message_handler(commands=['cancelarsuscripcion'])
+@bot.message_handler(commands=['eliminar'])
 def unsubscribe(message):
     msg = 'Los productos disponibles para eliminar la suscripcion son: ' + '\n'
 
